@@ -1,0 +1,605 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500&family=Quicksand&family=Merriweather&display=swap');
+
+:root{
+  --text: #5D4332;
+  --text2: #0f0f0f;
+  --background: #f1f1f1;
+  --primary: #d6de67;
+  --secondary: #B2B446;
+  --accent: #f2803f;
+  --accent2: #89C9C2;
+  --background2: rgba(217, 197, 125, 0.5);
+
+  --title: "Merriweather", sans-serif;
+  --info: "Poppins", sans-serif;
+
+  --biggest-font-size: 2.25rem;
+  --h1-font-size:1.5rem;
+  --h2-font-size:1.25rem;
+  --h3-font-size:1rem;
+  --normal-font-size:.938rem;
+  --small-font-size:.813rem;
+  --smaller-font-size:.75rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--info);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: var(--background);
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+h1,
+h2,
+h3{
+  font-family: var(--title);
+}
+
+.navbar {
+  display: flex;
+  padding: 0 20px;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.navbar input#menu-toggler {
+  display: none;
+}
+
+.navbar #hamburger-btn {
+  cursor: pointer;
+  display: none;
+}
+
+.navbar .all-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .all-links li {
+  position: relative;
+  list-style: none;
+}
+
+.navbar .logo a img{
+  margin: 0;
+  width: 80px;
+}
+
+header a, footer a {
+  text-decoration: none;
+  color: var(--text);
+  height: 100%;
+  padding: 0px 20px;
+  display: inline-block;
+}
+
+header a:hover, header a:active, 
+footer a:hover, footer a:active {
+  color: var(--accent);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: var(--secondary);
+  color: var(--text);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  right: 0;
+}
+
+.dropdown-content a {
+  color: var(--text);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border-bottom: 1px solid var(--text);
+}
+
+.dropdown-content a:first-child{
+  border-radius: 5px 5px 0px 0px;
+}
+
+.dropdown-content a:last-child{
+  border-radius: 0px 0px 5px 5px;
+}
+
+.dropdown-content a:hover {background-color: var(--accent);
+color: var(--background);}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+.main{
+  position: relative;
+  min-height: calc(100vh - 65px);
+  display: grid;
+  padding-top: 50px;
+  grid-template-columns: 1fr 4fr;
+}
+
+.sidebar {
+  grid-area: 1 / 1 / 1 / 3;
+  background-color: var(--secondary);
+  width: 260px;
+  position: fixed;
+  float: left;
+  top: 0;
+  height: 100%;
+  padding: 100px 20px;
+  z-index: 4;
+  box-shadow: 0 0 1px #aaa;
+  transition: all 0.5s ease;
+  overflow: hidden;
+  display: block;
+}
+.sidebar.close {
+  padding: 60px 0;
+  width: 80px;
+}
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+.menu_content {
+  position: relative;
+}
+.menu_title {
+  margin: 15px 0;
+  padding: 0 20px;
+  font-size: 18px;
+}
+.sidebar.close .menu_title {
+  padding: 6px 30px;
+}
+.menu_title::before {
+  color: var(--text2);
+  white-space: nowrap;
+}
+.menu_profile::before {
+  content: "Perfil";
+}
+.menu_products::before{
+  content: "Productos"
+}
+.sidebar.close .menu_title::before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 18px;
+  border-radius: 12px;
+  background: var(--background);
+}
+.menu_items {
+  padding: 0;
+  list-style: none;
+}
+.navlink_icon {
+  position: relative;
+  font-size: 22px;
+  min-width: 50px;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  border-radius: 6px;
+}
+.navlink_icon::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: calc(100% + 100px);
+  left: -20px;
+}
+.navlink_icon:hover {
+  background: var(--accent);
+}
+.sidebar .nav_link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 4px 15px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text2);
+}
+.sidebar.close .navlink {
+  display: none;
+}
+.nav_link:hover {
+  color: var(--background);
+  background: var(--accent);
+}
+.sidebar.close .nav_link:hover {
+  background: var(--background);
+}
+.bottom_content {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  float: left;
+  width: 260px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+.bottom {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  left: 0;
+  justify-content: space-around;
+  padding: 18px 0;
+  text-align: center;
+  width: 100%;
+  color: var(--text);
+  border-top: 1px solid var(--accent);
+  background-color: var(--primary);
+}
+.bottom i {
+  font-size: 20px;
+}
+.bottom span {
+  font-size: 18px;
+}
+.sidebar.close .bottom_content {
+  width: 50px;
+  left: 15px;
+}
+.sidebar.close .bottom span {
+  display: none;
+}
+.sidebar.hoverable .collapse_sidebar {
+  display: none;
+}
+#sidebarOpen {
+  display: none;
+}
+.content {
+  grid-area: 1 / 2 / 2 / 3;
+  display: flex;
+  padding-top: 80px;
+}
+
+.cards .card p {
+  padding: 0 15px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+section .cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  padding: 0 10px;
+  justify-content: center;
+  gap: 30px;
+}
+.providers .card img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+  object-fit:contain;
+}
+
+.cards .card p {
+  padding: 0 15px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+section .cards .card {
+  background: var(--accent2);
+  color: var(--text);
+  padding: 40px 15px;
+  list-style: none;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.04);
+  margin-bottom: 40px;
+  text-align: center;
+  width: 300px;
+}
+
+.btn{
+  text-decoration: none;
+  background-color: var(--primary);
+  padding: 12px;
+  border-radius: 5px;
+  color: var(--text);
+  font-weight:500;
+  transition: 0.4s ease;
+  text-align: center;
+}
+
+.btn:hover{
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+.btn-2{
+  text-decoration: none;
+  background: var(--secondary);
+  padding: 12px;
+  border-radius: 25px;
+  color: var(--text)!important;
+  font-weight:500;
+  transition: 0.4s ease;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.btn-2:hover{
+  background-color: var(--accent)!important;
+  color: var(--background)!important;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: var(--primary);
+  padding: 20px 0;
+}
+
+footer div {
+  padding: 0 10px;
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+footer span, footer a {
+  color: var(--background);
+  padding: 0;
+}
+
+.form{
+  border: 2px solid var(--primary);
+  padding:0.5rem 1rem;
+  color: var(--text);
+  border-radius: 1rem;
+  max-height:min-content;
+  height: 620px;
+}
+.title{
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.inputs,
+.input{
+  display: grid;
+}
+
+.inputs{
+  row-gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+.input{
+  grid-template-columns: 1fr max-content;
+  column-gap: .75rem;
+  align-items: center;
+  border: 2px solid var(--primary);
+  padding-inline: 1.25rem;
+  border-radius: 15px;
+  color: gray;
+  font-size: 13px;
+}
+input,.form-btn{
+  border: none;
+  outline: none;
+}
+input{
+  width: 100%;
+  background: none;
+  padding-block: 1rem;
+}
+.input i{
+  font-size: 1.25rem;
+}
+.forgot{
+  text-align: right;
+}
+.form a{
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 500;
+}
+.form a:hover{
+  text-decoration: underline;
+  color: var(--accent);
+}
+.form-btn{
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--primary);
+  color: var(--text);
+  border-radius: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+form textarea{
+  border: none;
+  outline: none;
+  background: none;
+  width: 100%;
+  padding-top: 10px;
+  resize: none;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+form select{
+  border: none;
+  outline: none;
+}
+sup{
+  background-color: var(--accent);
+  padding: 0px 5px;
+  height: 5px;
+  width: 5px;
+  border-radius: 25px;
+  color: var(--background);
+}
+.orders{
+  width: 80%;
+  margin: 20px;
+  padding: 20px;
+  background: var(--background2);
+  box-shadow: 1px 2px 3px 0px rgba(0,0,0,0.10);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 1px solid var(--accent);
+}
+
+.orders table {
+	width: 100%;
+}
+.orders table thead td {
+	padding: 30px 0;
+	border-bottom: 1px solid var(--accent2);
+}
+.orders table tbody td, th {
+	padding: 20px 0;
+	border-bottom: 1px solid var(--accent2);
+}
+.orders table .img {
+	width: 80px;
+}
+.orders table .remove {
+	color: var(--accent);
+	padding-top: 3px;
+}
+.orders table .remove:hover {
+	text-decoration: underline;
+}
+.orders table a {
+	text-decoration: none;
+	color: #555555;
+}
+.orders table .price {
+	color: var(--accent);
+}
+.orders .subtotal {
+	text-align: right;
+	padding: 40px 0;
+}
+.orders .subtotal .text {
+	padding-right: 40px;
+	font-size: 18px;
+}
+.orders .subtotal .price {
+	font-size: 18px;
+  color: var(--primary);
+}
+.orders .buttons {
+  display: inline;
+	padding-bottom: 40px;
+}
+
+@media screen and (max-width: 1127px) {
+  .navbar .all-links {
+    position: fixed;
+    left: -100%;
+    width: 250px;
+    display: block;
+    height: 100vh;
+    top: 89px;
+    background: var(--accent2);
+    transition: left 0.3s ease;
+    padding-top: 20px;
+  }
+
+  .navbar #menu-toggler:checked~.all-links {
+    left: -10px;
+  }
+
+  .navbar .all-links li {
+    font-size: 15px;
+    -webkit-user-select: none;
+    user-select: none;
+    padding-bottom: 25px;
+  }
+
+  .navbar #hamburger-btn {
+    display: block;
+  }
+
+  footer a {
+    height: 0;
+  }
+  #sidebarOpen {
+    font-size: 25px;
+    display: block;
+    margin-right: 10px;
+    cursor: pointer;
+    color: var(--grey-color);
+  }
+  .search_bar {
+    display: none;
+  }
+  .dropdown-content{
+    left: 0;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  section .cards .card {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .orders{
+    font-size: var(--smaller-font-size)!important;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .social-nav{
+    display: none;
+  }
+  .form{
+    left: 30px;
+  }
+  .input{
+    width: 100%;
+  }
+}
