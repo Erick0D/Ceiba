@@ -13,16 +13,27 @@
     }
     include '../funciones.php';
     $Con=Conectar();
-    $SQL="INSERT INTO usuarios (nombre, ap_pat, ap_mat, email, password, telefono, estatus) VALUES ('$name','$lastname','$slastname','$email','$password','$pnumber','$status')";
-    $Resultado=Consultar($Con,$SQL);
-    Desconectar($Con);
-    if($Resultado==1){
-      header("Location: ../login");
-    }else{
+    $SQL="SELECT email FROM usuarios WHERE email = '$email';";
+    $validarCorreo=Consultar($Con,$SQL);
+    $validacion = mysqli_num_rows($validarCorreo);
+    if ($validacion > 0) {
       echo "<script>
-          alert('Error! Revise los datos.');
-          </script>";
+            alert('Error! Este correo ya esta registrado. Intente con otro.');
+            </script>";
     }
+    else{
+      $Con=Conectar();
+      $SQL="INSERT INTO usuarios (nombre, ap_pat, ap_mat, email, password, telefono, estatus) VALUES ('$name','$lastname','$slastname','$email','$password','$pnumber','$status')";
+      $Resultado=Consultar($Con,$SQL);
+      if($Resultado==1){
+        header("Location: ../login");
+      }else{
+        echo "<script>
+            alert('Error! Revise los datos.');
+            </script>";
+      }
+    }
+    Desconectar($Con);
   }
 ?>
 <!DOCTYPE html>
@@ -30,7 +41,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CEIBA - Login</title>
+    <title>CEIBA - Registro</title>
     <link rel="icon" href="../imgs/Ceiba.jpeg">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
@@ -73,7 +84,7 @@
     <main class="main">
         <section class="form">
             <form id="register" name="login" method="post" action="">
-                <h2 class="title">Regístrate</h2>
+                <h2 class="title">Regístrate como cliente</h2>
                 <div class="inputs">
                     <div class="input">
                       <input name="name" type="text" placeholder="Nombre(s)" required>

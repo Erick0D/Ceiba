@@ -86,7 +86,7 @@ if (isset($_SESSION['Bandera'])) {
                 <div class="dropdown-content">
                   <a href="../perfil/?tab=informacion">Perfil</a>
                   <a href="../perfil/?tab=pedidos">Pedidos</a>
-                  <a href="close.php">Cerrar sesión</a>
+                  <a href="../close.php">Cerrar sesión</a>
                 </div>
               </div>
             </li>';

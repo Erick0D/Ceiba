@@ -164,14 +164,17 @@
       <?php
         if($tipo=='productores'){
           if (isset($_POST['Guardar'])){
+            if (isset($_FILES["logo"]) && $_FILES["logo"]["error"] == 0) {
+              $logo_temporal = $_FILES["logo"]["tmp_name"];
+              $logo = $_FILES["logo"]["name"];
+              $carpeta_destino = "../imgs";
+              move_uploaded_file($logo_temporal, "$carpeta_destino/$logo");
+            }else{
+                $logo = $fila[6];
+            }
             $name=$_POST['name'];
             $pnumber=$_POST['phone'];
-            $email=$_POST['email'];
-            $logo=$_POST['logo'];
             $address=$_POST['address'];
-            if (empty($logo)) {
-              $logo = '../imgs/proveedores';
-            }
             $Con=Conectar();
             $SQL="UPDATE productores SET empresa='$name', logo='$logo', telefono='$pnumber', direccion='$address' WHERE id = $id;";
             $Resultado=Consultar($Con,$SQL);
@@ -188,7 +191,7 @@
           }
           switch ($_GET['tab']) {
             case 'informacion':
-              echo '<form id="edit" name="edit" method="post" action="">
+              echo '<form id="edit" name="edit" method="post" action="" enctype="multipart/form-data">
                       <h2 class="title">Tu información</h2>
                       <div class="inputs">
                           <div class="input">
@@ -248,24 +251,27 @@
               break;
             case 'registro':
               if (isset($_POST['Registrar'])){
+                if (isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0) {
+                  $photo_temporal = $_FILES["photo"]["tmp_name"];
+                  $photo = $_FILES["photo"]["name"];
+                  $carpeta_destino = "../imgs";
+                  move_uploaded_file($photo_temporal, "$carpeta_destino/$photo");
+                }else{
+                    $photo = 'default.webp';
+                }
                 $name=$_POST['name'];
                 $description=$_POST['description'];
                 $category=$_POST['category'];
-                $photo=$_POST['photo'];
                 $price=$_POST['price'];
                 $amount=$_POST['amount'];
                 $status=1;
-            
-                if (empty($photo)) {
-                    $photo = '../imgs/proveedores/productos';
-                }
                 $Con=Conectar();
                 $SQL="INSERT INTO productos (nombre, descripcion, id_categoria, foto, precio, cantidad, estatus, id_productor) VALUES ('$name','$description','$category','$photo','$price','$amount','$status','$id')";
                 $Resultado=Consultar($Con,$SQL);
                 Desconectar($Con);
                 if($Resultado==1){
                   echo "<script>
-                  alert('Se guardaron los datos.');
+                  alert('Se creó el producto exitosamente.');
                   </script>";
                 }else{
                   echo "<script>
@@ -274,7 +280,7 @@
                 }
               }
               echo '<section class="form">
-                <form id="register" name="register" method="post" action="">
+                <form id="register" name="register" method="post" action="" enctype="multipart/form-data">
                     <h2 class="title">Registra un producto</h2>
                     <div class="inputs">
                         <div class="input">

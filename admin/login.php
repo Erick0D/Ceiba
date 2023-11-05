@@ -32,6 +32,9 @@
         //Si la contraseña que corresponde a ese usuario
         if($password==$Fila[1]){
           //Guardar variables de sesión
+          $_SESSION['tipo']='admin';
+          $_SESSION['user']='admin';
+          $_SESSION['name']='admin';
           $_SESSION['admin']=$Fila[0];
           $_SESSION['Bandera']="SI";
           echo "<script>

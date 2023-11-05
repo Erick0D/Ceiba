@@ -6,24 +6,18 @@
     @session_start(); 
     $Con=Conectar();
     //Guardar el usuario de la sesión activa
-    if(isset($_SESSION['user'])){
-      $user=$_SESSION['user'];
+    if(isset($_SESSION['Bandera'])){
       $tipo=$_SESSION['tipo'];
-      $cart = $_SESSION['cart'];
-      //Seleccionar una columna de la tabla usuarios
-      $SQL= "SELECT *
-      FROM $tipo
-      WHERE email='$user';";
-        //Hacer la consulta con el comando SQL correspondiente
-      $Resultado=Consultar($Con, $SQL);
-        //Guardar los datos en un arreglo
-      $fila=mysqli_fetch_row($Resultado);
-      $name=$fila[1];
-  $SQL= "SELECT *
-      FROM carrito_productos
-      WHERE id_carrito= '$cart';";
-  $Resultado=Consultar($Con, $SQL);
-  $items=mysqli_num_rows($Resultado);
+      $user=$_SESSION['user'];
+      $name = $_SESSION['name'];
+      if($tipo==="usuarios"){
+        $cart = $_SESSION['cart'];
+        $SQL= "SELECT *
+          FROM carrito_productos
+          WHERE id_carrito= '$cart';";
+        $Resultado=Consultar($Con, $SQL);
+        $items=mysqli_num_rows($Resultado);
+      }
         //Desconectar
       Desconectar($Con);
     }
@@ -75,11 +69,21 @@
             } else {
               if($tipo==='usuarios'){
               echo '<li><a href="../carrito"><i class="fa-solid fa-cart-shopping"><sup>' . $items . '</sup></i> Carrito</a></li>
-              <li>';
-              }
-              echo '
+              <li>
               <div class="dropdown">
-                <a class="btn profile"><i class="fa-solid fa-circle-user fa-xl"></i> ' . $name . ' <i class="fa-solid fa-sort-down"></i>
+              <a class="btn profile"><i class="fa-solid fa-circle-user fa-xl"></i> ';
+              }
+                else if ($tipo==='productores'){
+                echo '
+                <div class="dropdown">
+                <a class="btn profile"><i class="fa-solid fa-store fa-xl"></i>'; 
+              }
+              else{
+              echo '
+                <div class="dropdown">
+                <a class="btn profile">';
+              }
+              echo ''. $name .' <i class="fa-solid fa-sort-down"></i>
                 </a>
                 <div class="dropdown-content">
                   <a href="../perfil/?tab=informacion">Perfil</a>
@@ -87,7 +91,7 @@
                   <a href="close.php">Cerrar sesión</a>
                 </div>
               </div>
-            </li>';
+                </li>';
             }
           ?>
         </ul>
@@ -126,7 +130,9 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, doloremque sapiente nesciunt illum voluptatibus corporis laboriosam quia quam vel officiis sint recusandae tenetur dignissimos nulla! Rerum officiis eligendi iure dignissimos.</p><br>
           </div>
           <div class="about-img">
-            <img src="imgs/video.gif" title="img">
+            <video autoplay muted loop>
+              <source src="imgs/video.webm" type="video/webm">
+            </video>
           </div>
         </div>
       </section>
@@ -155,7 +161,7 @@
 
       <section class="contact" id="contact">
         <h2>Contacto</h2>
-        <p>¿Tienes alguna pregunta o comentario? ¡Contáctanos y estaremos encantados de ayudarte!</p>
+        <p>¿Quieres unirte como productor o tienes alguna pregunta o comentario? ¡Contáctanos y estaremos encantados de ayudarte!</p>
         <div class="row">
           <div class="col information">
             <div class="social-icons">

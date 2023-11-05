@@ -8,7 +8,6 @@
     session_start();
 
     //Guardar variables con los datos ingresados para iniciar sesión
-    $tipo=$_POST['radio'];
     $email=$_POST['email'];
     $password=$_POST['password'];
 
@@ -19,7 +18,8 @@
     $Con=Conectar();
 
     //Seleccionar una columna de la tabla usuarios
-    $SQL=("SELECT id,email,password FROM $tipo WHERE email='$email';");
+    $SQL=("SELECT id,email,password, 'usuarios' as origen FROM usuarios WHERE email = '$email'
+    UNION SELECT id,email,password, 'productores' as origen FROM productores WHERE email = '$email';");
 
     //Hacer la consulta con el comando SQL correspondiente
     $Resultado=Consultar($Con,$SQL);
@@ -34,10 +34,19 @@
       //Si la contraseña que corresponde a ese usuario
       if($password==$Fila[2]){
         //Guardar variables de sesión
+        $tipo=$Fila[3];
         $_SESSION['tipo']=$tipo;
-        $_SESSION['id']=$Fila[0];
-        $_SESSION['user']=$Fila[1];
+        $id=$Fila[0];
+        $_SESSION['id']=$id;
+        $user=$Fila[1];
+        $_SESSION['user']=$user;
         $_SESSION['Bandera']="SI";
+        $SQL= "SELECT *
+        FROM $tipo
+        WHERE email='$user';";
+        $ResultadoNombre=Consultar($Con, $SQL);
+        $nombre=mysqli_fetch_row($ResultadoNombre);
+        $_SESSION['name']=$nombre[1];
         $SQL=("SELECT id FROM carrito WHERE id_usuario='$Fila[0]';");
         $Resultado=Consultar($Con,$SQL);
         $cart=mysqli_fetch_row($Resultado);
@@ -45,7 +54,7 @@
         echo "<script>
         alert('Inicio de sesión exitoso.');
         </script>";
-        if($tipo=="productores"){
+        if($_SESSION['tipo']=="productores"){
           echo "<script>window.location.href='../perfil?tab=informacion';</script>";
         }else{
           echo "<script>window.location.href='../';</script>";
@@ -122,16 +131,6 @@
             <form class="login" method="post" name="login">
                 <h2 class="title">Inicia Sesión</h2>
                 <div class="inputs">
-                  <div class="radio-inputs">
-                    <label class="radio">
-                      <input type="radio" name="radio" id="usuarios" value="usuarios" checked="">
-                      <span class="name">Usuario</span>
-                    </label>
-                    <label class="radio">
-                      <input type="radio" name="radio" id="productores" value="productores">
-                      <span class="name">Productor</span>
-                    </label>
-                  </div>
                     <div class="input">
                         <input name="email" type="email" placeholder="Correo electrónico" required>
                         <i class="fa-solid fa-envelope"></i>

@@ -138,23 +138,28 @@
       <?php
       switch ($_GET['tab']) {
         case 'regproductores':
+          if (isset($_FILES["logo"]) && $_FILES["logo"]["error"] == 0) {
+            $logo_temporal = $_FILES["logo"]["tmp_name"];
+            $logo = $_FILES["logo"]["name"];
+            $carpeta_destino = "../imgs";
+            move_uploaded_file($logo_temporal, "$carpeta_destino/$logo");
+          }else{
+              $logo = 'productor.webp';
+          }
           if (isset($_POST['Registrar'])){
             $name=$_POST['name'];
             $pnumber=$_POST['pnumber'];
             $email=$_POST['email'];
-            $photo=$_POST['photo'];
             $password=$_POST['password'];
             $status=1;
-  
-            if (empty($photo)) {
-              $photo = '../imgs/proveedores';
-            }
             $Con=Conectar();
-            $SQL="INSERT INTO productores (empresa, telefono, email, password, logo, estatus) VALUES ('$name','$pnumber','$email','$password','$photo','$status')";
+            $SQL="INSERT INTO productores (empresa, telefono, email, password, logo, estatus) VALUES ('$name','$pnumber','$email','$password','$logo','$status')";
             $Resultado=Consultar($Con,$SQL);
             Desconectar($Con);
             if($Resultado==1){
-              header("Location: ../login");
+              echo "<script>
+                  alert('Productor registrado exitosamente.');
+                  </script>";
             }else{
               echo "<script>
                   alert('Error! Revise los datos.');
@@ -162,7 +167,7 @@
             }
           }
           echo '
-          <form id="register" name="login" method="post" action="">
+          <form id="register" name="login" method="post" action="" enctype="multipart/form-data">
               <h2 class="title">Registra nuevo proveedor</h2>
               <div class="inputs">
                   <div class="input">
@@ -170,8 +175,8 @@
                     <i class="fa-solid fa-user"></i>
                   </div>
                   <div class="input">
-                    <label>Foto</label>
-                    <input name="photo" type="file" accept="image/*">
+                    <label>Logo</label>
+                    <input name="logo" type="file" accept="image/*">
                   </div>
                   <div class="input">
                     <input name="pnumber" type="text" placeholder="Teléfono" maxlength="10" required>
